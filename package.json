@@ -1,0 +1,26 @@
+{
+  "name": "@jsantell/event-target",
+  "version": "1.0.0",
+  "description": "EventTarget class",
+  "main": "./dist/EventTarget.js",
+  "module": "./dist/EventTarget.module.js",
+  "scripts": {
+    "build": "rollup -c",
+    "preversion": "npm run test",
+    "version": "npm run build && git add dist/*",
+    "postversion": "git push && git push --tags && npm publish",
+    "test": "npm run build && mocha"
+  },
+  "author": "Jordan Santell <jordan@jsantell.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "rollup": "^0.58.2"
+  },
+  "keywords": [
+    "event",
+    "event-target"
+  ],
+  "repository": "https://github.com/jsantell/event-target"
+}
