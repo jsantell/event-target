@@ -1,13 +1,20 @@
 const mocha = require('mocha');
 const assert = require('chai').assert;
-
 const EventTarget = require('../');
 
-class ChildTarget extends EventTarget {}
+class MyTarget extends EventTarget {}
+
+class CustomEvent {
+  constructor(event, { bubbles, cancelable, detail } = {}) {
+    this.bubbles = !!bubbles;
+    this.cancelable = !!cancelable;
+    this.detail = detail || null;
+  }
+}
 
 describe('EventTarget', () => {
   it('binds events via addEventListener', () => {
-    const c = new ChildTarget();
+    const c = new MyTarget();
     const events = [];
     c.addEventListener('click', ({ value }) => events.push(`${value}-1`));
     c.addEventListener('click', ({ value }) => events.push(`${value}-2`));
@@ -21,7 +28,7 @@ describe('EventTarget', () => {
   });
 
   it('removes events via removeEventListener', () => {
-    const c = new ChildTarget();
+    const c = new MyTarget();
     const events = [];
     const c1 = ({ value }) => events.push(`${value}-1`);
     const c2 = ({ value }) => events.push(`${value}-2`);
@@ -41,7 +48,7 @@ describe('EventTarget', () => {
   });
 
   it('fires handlers stored as `on${type}` attributes', () => {
-    const c = new ChildTarget();
+    const c = new MyTarget();
     const events = [];
     const c1 = ({ value }) => events.push(`${value}-1`);
     const c2 = ({ value }) => events.push(`${value}-2`);
@@ -50,5 +57,19 @@ describe('EventTarget', () => {
 
     c.dispatchEvent('click', { value: 'hello' });
     assert.deepEqual(events, ['hello-1', 'hello-2']);
+  });
+
+  it('sets target if using CustomEvent', () => {
+    const c = new MyTarget();
+    c.addEventListener('foo', e => {
+      assert(e.target === c);
+    });
+
+    c.addEventListener('bar', e => {
+      assert(e.target === undefined);
+    });
+
+    c.dispatchEvent('foo', new CustomEvent('foo'));
+    c.dispatchEvent('bar', { data: 'bar' });
   });
 });
