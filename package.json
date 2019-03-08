@@ -1,6 +1,6 @@
 {
   "name": "@jsantell/event-target",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "EventTarget class",
   "main": "./dist/EventTarget.js",
   "module": "./dist/EventTarget.module.js",

@@ -44,6 +44,10 @@ class EventTarget {
   dispatchEvent(type, event) {
     const typedListeners = this[PRIVATE].listeners.get(type) || [];
 
+    if (('target' in event) || ('detail' in event)) {
+      event.target = this;
+    }
+
     // Copy over all the listeners because a callback could remove
     // an event listener, preventing all listeners from firing when
     // the event was first dispatched.
