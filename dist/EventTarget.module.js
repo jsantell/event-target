@@ -32,7 +32,7 @@ class EventTarget {
 
     for (let i = typedListeners.length; i >= 0; i--) {
       if (typedListeners[i] === listener) {
-        typedListeners.pop();
+        typedListeners.splice(i, 1);
       }
     }
   }
