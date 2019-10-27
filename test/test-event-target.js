@@ -38,13 +38,13 @@ describe('EventTarget', () => {
     c.dispatchEvent('click', { value: 'hello' });
     assert.deepEqual(events, ['hello-1', 'hello-2']);
 
-    c.removeEventListener('click', c2);
-    c.dispatchEvent('click', { value: 'world' });
-    assert.deepEqual(events, ['hello-1', 'hello-2', 'world-1']);
-
     c.removeEventListener('click', c1);
+    c.dispatchEvent('click', { value: 'world' });
+    assert.deepEqual(events, ['hello-1', 'hello-2', 'world-2']);
+
+    c.removeEventListener('click', c2);
     c.dispatchEvent('click', { value: 'hello' });
-    assert.deepEqual(events, ['hello-1', 'hello-2', 'world-1']);
+    assert.deepEqual(events, ['hello-1', 'hello-2', 'world-2']);
   });
 
   it('fires handlers stored as `on${type}` attributes', () => {
