@@ -5,7 +5,7 @@
   "main": "./dist/EventTarget.js",
   "module": "./dist/EventTarget.module.js",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c && scripts/append-license.sh",
     "preversion": "npm run test",
     "version": "npm run build && git add dist/*",
     "postversion": "git push && git push --tags && npm publish",
